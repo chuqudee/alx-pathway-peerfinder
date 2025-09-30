@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Fallback Match - Admin Authentication</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #f6f8fa; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0;
+        }
+        .container { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+            width: 300px; 
+            text-align: center; 
+        }
+        h1 {
+            margin-bottom: 1rem;
+            color: #232f3e;
+        }
+        input[type=password] { 
+            width: 100%; 
+            padding: 0.6rem; 
+            margin-top: 1rem; 
+            font-size: 1rem; 
+            border-radius: 5px; 
+            border: 1px solid #ccc; 
+            box-sizing: border-box;
+        }
+        button { 
+            margin-top: 1rem; 
+            padding: 0.6rem 1.2rem; 
+            font-size: 1rem; 
+            border-radius: 5px; 
+            border: none; 
+            background: #ff9800; 
+            color: white; 
+            cursor: pointer; 
+            width: 100%;
+        }
+        button:hover { 
+            background: #ffb347; 
+        }
+        .error { 
+            color: red; 
+            margin-top: 1rem; 
+        }
+        .back-link {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .back-link a {
+            color: #ff9800;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Authentication Required</h1> 
+  
+    <div class="container">
+        <h2>Enter Admin Password</h2>
+        <form method="POST">
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit">Trigger Fallback Match</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="error">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="back-link">
+        <a href="{{ url_for('admin') }}">&larr; Back to Admin Dashboard</a>
+    </div>
+</body>
+</html>

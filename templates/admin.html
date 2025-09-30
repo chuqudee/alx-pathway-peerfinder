@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard - PeerFinder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f8fa;
+            padding: 2rem;
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #232f3e;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 1rem 2rem;
+            margin: 0.5rem 0;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #ffb347;
+        }
+        p.note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 1rem;
+        }
+        /* Flashed messages styles */
+        ul.flashes {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1rem;
+            color: green;
+            font-weight: 600;
+        }
+        ul.flashes li {
+            border: 1px solid #4caf50;
+            background-color: #e8f5e9;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <a href="{{ url_for('download_queue') }}" class="btn">Download Queue CSV</a><br />
+    <a href="{{ url_for('download_feedback') }}" class="btn">Download Feedback CSV</a><br />
+    <a href="{{ url_for('admin_fallback') }}" class="btn">Trigger Fallback Matching</a>
+
+    <p class="note">You will be prompted to enter the admin password before downloading file or triggering fallback matching.</p>
+</body>
+</html>

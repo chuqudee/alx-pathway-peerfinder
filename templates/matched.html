@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>PeerFinder | You Have Been Matched!</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            background: #f6f8fa;
+            color: #232f3e;
+        }
+        .navbar {
+            background: #232f3e;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo-img {
+            height: 32px;
+            margin-right: 12px;
+        }
+        .navbar .logo-text {
+            color: #ff9800;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 3rem auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+            padding: 2rem;
+            text-align: center;
+        }
+        h2 {
+            color: #232f3e;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .group-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        .group-list li {
+            background: #f6f8fa;
+            margin: 0.5rem 0;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 1.08rem;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .group-list li.you {
+            background: #ffe0b2;
+            font-weight: 600;
+        }
+        .contact-msg {
+            color: #388e3c;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #232f3e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="{{ url_for('static', filename='alx_icon-300x169.png') }}" class="logo-img" alt="ALX Logo" />
+        <span class="logo-text">PeerFinder</span>
+    </div>
+    <div class="container">
+        <h2>You Have Been Matched!</h2>
+        <ul class="group-list">
+            {% for member in group_members %}
+                <li{% if member['id'] == user['id'] %} class="you"{% endif %}>
+                    <span>
+                        {{ member['name'] }}{% if member['id'] == user['id'] %} (You){% endif %}
+                    </span>
+                    <span>WhatsApp: {{ member['phone'] }}</span>
+                    <span>Availability: {{ member['availability'] }}</span>
+                    {% if member.get('kind_of_support') %}
+                        <span>Kind of Support: {{ member['kind_of_support'] if member['kind_of_support'] != 'nan' else 'Accountability' }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="contact-msg">Please contact your peer(s) now and start collaborating!</div>
+        <a href="{{ url_for('landing') }}" class="back-link">&larr; Back to Home</a>
+    </div>
+</body>
+</html>

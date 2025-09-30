@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Check Match Status</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #5648B7;
+            margin: 0;
+            padding: 2rem;
+            color: #232f3e;
+        }
+        .container {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: rgb(226, 223, 223);
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+        }
+        h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #013569;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 0.7rem;
+            font-size: 1rem;
+            border-radius: 7px;
+            border: 1px solid #ddd;
+            margin-right: 0.5rem;
+        }
+        button {
+            background: #5648B7;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #ffb347;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .result {
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+        th {
+            background-color: #012760;
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+            color: #232f3e;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        /* Unpair form styles */
+        #unpairForm {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        #unpairForm label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        #unpairForm textarea {
+            width: 100%;
+            max-width: 400px;
+            height: 70px;
+            border-radius: 7px;
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+        #unpairForm button {
+            margin-top: 0.7rem;
+            background: #e53935;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        #unpairForm button:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Check Your Match Status</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="{{ url_for('check_match') }}">
+            <input type="text" name="user_id" placeholder="Enter your ID here" required />
+            <button type="submit">Check</button>
+        </form>
+
+        {% if matched is defined %}
+            {% if matched %}
+                <p class="result">You have been matched with the following peer(s):</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>WhatsApp Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in group_members %}
+                        <tr>
+                            <td>
+                                {{ member['name'] }}
+                                {% if member['id'] == user['id'] %} <strong>(You)</strong>{% endif %}
+                            </td>
+                            <td>{{ member['email'] }}</td>
+                            <td>{{ member['phone'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Unpair form -->
+                <form id="unpairForm" method="POST" action="/unpair">
+                    <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                    <label for="reason">Reason for unpairing (required):</label>
+                    <textarea name="reason" id="reason" rows="3" required></textarea>
+                    <button type="submit">Unpair</button>
+                </form>
+
+                <script>
+                    document.getElementById('unpairForm').onsubmit = async function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(this);
+                        const response = await fetch('/unpair', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        const data = await response.json();
+                        if(data.success) {
+                            alert('You have been unpaired. You can now join the queue again.');
+                            window.location.href = '/';
+                        } else {
+                            alert(data.error || 'Unpairing failed.');
+                        }
+                    };
+                </script>
+            {% else %}
+                <p class="result">No match yet. Please check back later.</p>
+            {% endif %}
+        {% endif %}
+        <a href="{{ url_for('landing') }}" class="back-link">&larr; Back to Home</a>
+    </div>
+</body>
+</html>

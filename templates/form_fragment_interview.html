@@ -1,0 +1,148 @@
+<style>
+  form {
+    max-width: 500px;
+    margin: 1rem auto;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    background: #0f2147;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #152e73;
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  fieldset {
+    border: none;
+    margin-bottom: 20px;
+  }
+
+  fieldset legend {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  fieldset label {
+    margin-right: 14px;
+    font-weight: normal;
+  }
+
+  button[type="submit"] {
+    background: #604de0;
+    color: #fff;
+    border: none;
+    padding: 15px 0;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+
+  button[type="submit"]:hover {
+    background: #4b39cc;
+  }
+</style>
+
+<form method="POST" action="{{ url_for('join_queue') }}">
+  <input type="hidden" name="connection_type" value="interview" />
+
+  <label for="name">Full Name:</label>
+  <input type="text" id="name" name="name" required />
+
+  <label for="email">Email Address:</label>
+  <input type="email" id="email" name="email" required />
+
+  <label for="phone">Phone Number:</label>
+  <div style="font-size:0.9rem; font-style: italic; margin-bottom: 6px;">
+    Please start with a plus sign (+) and your country code
+  </div>
+  <input type="tel" id="phone" name="phone" placeholder="+1234567890" required />
+
+  <label for="country">Country of Residence:</label>
+  <select id="country" name="country" required>
+    <!-- same options as above -->
+  </select>
+
+  <fieldset>
+    <legend>Are you comfortable communicating in English?</legend>
+    <label><input type="radio" name="english_comfort" value="Yes" required /> Yes</label>
+    <label><input type="radio" name="english_comfort" value="No" /> No</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Are you open to be paired with anyone outside your country/city?</legend>
+    <label><input type="radio" name="open_pairing" value="Yes" required /> Yes</label>
+    <label><input type="radio" name="open_pairing" value="No" /> No</label>
+  </fieldset>
+
+  <label for="availability">Availability:</label>
+  <select id="availability" name="availability" required>
+    <!-- options same as above -->
+  </select>
+
+  <label for="group_size">Group Setup:</label>
+  <select id="group_size" name="group_size" required>
+    <option value="" disabled selected>--Select Group Size--</option>
+    <option value="2">2</option>
+  </select>
+
+  <!-- Disclaimer checkbox -->
+  <div style="margin-top: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center;">
+    <input type="checkbox" id="disclaimer_agree" name="disclaimer_agree" required style="margin: 0; margin-right: 8px;" />
+      <label for="disclaimer_agree" style="font-size: 0.98rem; margin: 0;">
+          I have read and accept the
+          <a href="{{ url_for('disclaimer') }}" target="_blank" style="color:#5648B7; font-weight:600; text-decoration:underline;">
+            PeerFinder Disclaimer
+          </a>.
+      </label>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+<script>
+  document.querySelector('form').addEventListener('submit', function(e) {
+    // Disable the submit button to prevent multiple clicks
+    const submitBtn = this.querySelector('button[type="submit"]');
+    if(submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending email...⏳';
+    }
+
+    // Optionally show a loading overlay/message
+    let loadingDiv = document.createElement('div');
+    loadingDiv.id = 'loadingOverlay';
+    loadingDiv.style.position = 'fixed';
+    loadingDiv.style.top = '0';
+    loadingDiv.style.left = '0';
+    loadingDiv.style.width = '100vw';
+    loadingDiv.style.height = '100vh';
+    loadingDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    loadingDiv.style.color = '#fff';
+    loadingDiv.style.fontSize = '1.5rem';
+    loadingDiv.style.display = 'flex';
+    loadingDiv.style.justifyContent = 'center';
+    loadingDiv.style.alignItems = 'center';
+    loadingDiv.style.zIndex = '9999';
+    loadingDiv.textContent = 'Please wait while we process your request...';
+    document.body.appendChild(loadingDiv);
+  });
+</script>

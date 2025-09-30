@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Already Matched</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #5648B7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #232f3e;
+        }
+        .container {
+            background: rgb(230, 227, 227);
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+            max-width: 500px;
+            text-align: center;
+        }
+        h2 {
+            color: #388e3c;
+            margin-bottom: 1rem;
+        }
+        ul.group-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 2rem;
+            text-align: left;
+        }
+        ul.group-list li {
+            background: #e8f5e9;
+            margin: 0.5rem 0;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: #2e7d32;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        ul.group-list li span {
+            display: block;
+            font-weight: 600;
+        }
+        a.button {
+            background: #ff9800;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        a.button:hover {
+            background: #ffb347;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>You Have Already Been Matched!</h2>
+        <p>Here are your peer(s):</p>
+        <ul class="group-list">
+            {% for member in group_members %}
+                <li>
+                    <span>Name: {{ member['name'] }}</span>
+                    <span>Email: {{ member['email'] }}</span>
+                    <span>WhatsApp: {{ member['phone'] }}</span>
+                    <span>Availability: {{ member['availability'] }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('check_match') }}" class="button">Check Match Status</a><br><br>
+        <a href="{{ url_for('landing') }}" class="back-link">&larr; Back to Home</a>
+    </div>
+</body>
+</html>
