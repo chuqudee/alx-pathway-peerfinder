@@ -132,32 +132,5 @@
 
   <button type="submit">Submit</button>
 </form>
-<script>
-  document.querySelector('form').addEventListener('submit', function(e) {
-    // Disable the submit button to prevent multiple clicks
-    const submitBtn = this.querySelector('button[type="submit"]');
-    if(submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending email...⏳';
-    }
 
-    // Optionally show a loading overlay/message
-    let loadingDiv = document.createElement('div');
-    loadingDiv.id = 'loadingOverlay';
-    loadingDiv.style.position = 'fixed';
-    loadingDiv.style.top = '0';
-    loadingDiv.style.left = '0';
-    loadingDiv.style.width = '100vw';
-    loadingDiv.style.height = '100vh';
-    loadingDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
-    loadingDiv.style.color = '#fff';
-    loadingDiv.style.fontSize = '1.5rem';
-    loadingDiv.style.display = 'flex';
-    loadingDiv.style.justifyContent = 'center';
-    loadingDiv.style.alignItems = 'center';
-    loadingDiv.style.zIndex = '9999';
-    loadingDiv.textContent = 'Please wait while we process your request...';
-    document.body.appendChild(loadingDiv);
-  });
-</script>
 
