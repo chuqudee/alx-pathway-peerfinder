@@ -79,7 +79,16 @@
 
   <label for="country">Country of Residence:</label>
   <select id="country" name="country" required>
-    <!-- same options as above -->
+    <option value="" disabled selected>--Select Your Country--</option>
+    <option value="Egypt">Egypt</option>
+    <option value="Ethiopia">Ethiopia</option>
+    <option value="Ghana">Ghana</option>
+    <option value="Kenya">Kenya</option>
+    <option value="Morocco">Morocco</option>
+    <option value="Nigeria">Nigeria</option>
+    <option value="Rwanda">Rwanda</option>
+    <option value="South Africa">South Africa</option>
+    <option value="Other">Other</option>
   </select>
 
   <fieldset>
@@ -96,7 +105,11 @@
 
   <label for="availability">Availability:</label>
   <select id="availability" name="availability" required>
-    <!-- options same as above -->
+    <option value="" disabled selected>--Select Availability--</option>
+    <option value="Morning">Morning</option>
+    <option value="Afternoon">Afternoon</option>
+    <option value="Evening">Evening</option>
+    <option value="Flexible">Flexible (Any time)</option>
   </select>
 
   <label for="group_size">Group Setup:</label>
@@ -146,3 +159,4 @@
     document.body.appendChild(loadingDiv);
   });
 </script>
+
