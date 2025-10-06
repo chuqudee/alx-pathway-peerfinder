@@ -7,16 +7,42 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: #5648B7;
+            background: #f4f8fb;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             color: #232f3e;
         }
+        .navbar {
+            background: #eef4fb;
+            width: 100%;      /* Full width */
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border-radius: 0;
+            padding: 1rem 0;  /* top & bottom padding */
+        }
+        .navbar-inner {
+            max-width: 1200px; /* Container max width */
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem; /* horizontal padding */
+        }
+        .logo-img {
+            height: 32px;
+            margin-right: 12px;
+        }
+        .logo-text {
+            color: #1976d2;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
         .container {
-            background: rgb(230, 227, 227);
+            background: rgb(183, 222, 255);
             padding: 2rem 3rem;
             border-radius: 12px;
             box-shadow: 0 6px 24px rgba(0,0,0,0.07);
@@ -48,6 +74,19 @@
             display: block;
             font-weight: 600;
         }
+        .button-link {
+            display: inline-block;
+            background-color: #1976d2; /* blue color */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #125ca1; /* darker blue on hover */
+        }
         a.button {
             background: #ff9800;
             color: white;
@@ -65,6 +104,10 @@
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <img src="{{ url_for('static', filename='alx_icon-300x169.png') }}" class="logo-img" alt="ALX Logo" />
+        <span class="logo-text">PeerFinder</span>
+    </div>
     <div class="container">
         <h2>You Have Already Been Matched!</h2>
         <p>Here are your peer(s):</p>
@@ -78,8 +121,8 @@
                 </li>
             {% endfor %}
         </ul>
-        <a href="{{ url_for('check_match') }}" class="button">Check Match Status</a><br><br>
-        <a href="{{ url_for('landing') }}" class="back-link">&larr; Back to Home</a>
+        <a href="{{ url_for('check_match') }}" class="button-link">Check Match Status</a><br><br>
+        <a href="{{ url_for('landing') }}" class="button-link">&larr; Back to Home</a>
     </div>
 </body>
 </html>
