@@ -9,11 +9,11 @@
         body {
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
-            background: #f6f8fa;
+            background: #f4f8fb;
             color: #232f3e;
         }
         .navbar {
-            background: #232f3e;
+            background: #eef4fb;
             padding: 1rem 2rem;
             display: flex;
             align-items: center;
@@ -23,7 +23,7 @@
             margin-right: 12px;
         }
         .navbar .logo-text {
-            color: #ff9800;
+            color: #1976d2;
             font-weight: 700;
             font-size: 1.5rem;
             letter-spacing: 1px;
@@ -31,7 +31,7 @@
         .container {
             max-width: 500px;
             margin: 3rem auto;
-            background: #fff;
+            background: rgb(183, 222, 255);
             border-radius: 16px;
             box-shadow: 0 6px 24px rgba(0,0,0,0.07);
             padding: 2rem;
@@ -42,6 +42,19 @@
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 1rem;
+        }
+        .button-link {
+            display: inline-block;
+            background-color: #1976d2; /* blue color */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #125ca1; /* darker blue on hover */
         }
         .group-list {
             list-style: none;
@@ -111,7 +124,7 @@
             {% endfor %}
         </ul>
         <div class="contact-msg">Please contact your peer(s) now and start collaborating!</div>
-        <a href="{{ url_for('landing') }}" class="back-link">&larr; Back to Home</a>
+        <a href="{{ url_for('landing') }}" class="button-link">&larr; Back to Home</a>
     </div>
 </body>
 </html>
