@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PeerFinder | {{ connection_type|capitalize }} Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: #002b56;
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      background: #27DEF2;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .navbar-left {
+      display: flex;
+      align-items: center;
+    }
+    .navbar-left .logo {
+      color: #063a84;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+    .admin-link {
+      text-decoration: none;
+      color: #5648B7;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+      z-index: 2;
+    }
+    .admin-link:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    /* Back button inside navbar, centered */
+    .back-btn {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #5648B7;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      background: #5648B7;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      z-index: 1;
+    }
+    .back-btn:hover {
+      background-color: #27DEF2;
+      color: #002b56;
+    }
+    main.container {
+      max-width: 600px;
+      margin: 2rem auto 4rem auto;
+      background-color: #002b56;
+      padding: 2rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 0.8s ease forwards;
+      color: #fff;
+      position: relative;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #27DEF2;
+    }
+    .check-status-btn {
+      position: absolute;
+      top: 1rem;
+      right: 2.5rem;
+      background: #5648B7;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .check-status-btn:hover {
+      background: #27DEF2;
+      color: #002b56;
+    }
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="tel"],
+    form select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.3rem;
+      border-radius: 6px;
+      border: 1px solid #666;
+      background-color: #021f3d;
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    form input[type="text"]::placeholder,
+    form input[type="email"]::placeholder,
+    form input[type="tel"]::placeholder {
+      color: #bbb;
+    }
+    .phone-note {
+      font-size: 0.9rem;
+      color: #bbb;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+    .error-message {
+      color: #ff6666;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+    button[type="submit"] {
+      display: block;
+      width: 50%;
+      margin: 2rem auto 0 auto;
+      background-color: #5648B7;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background-color: #27DEF2;
+      color: #002b56;
+    }
+    @media (max-width: 620px) {
+      main.container {
+        width: 90%;
+        padding: 1.5rem;
+      }
+      .check-status-btn {
+        position: static;
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+      button[type="submit"] {
+        width: 100%;
+      }
+      .back-btn {
+        position: static;
+        transform: none;
+        display: block;
+        margin: 0 auto 1rem auto;
+        width: max-content;
+      }
+    }
+    .warning-message {
+        background-color: #fff4e5; /* Warm soft yellow */
+        color: #665200;            /* Dark yellow/brown text */
+        border: 1px solid #ffd42a; /* Bright yellow border */
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        }
+        .warning-message h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        }
+        .warning-message ul {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        padding-left: 1.3rem;
+        }
+        .warning-message ul li {
+        margin-bottom: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('landing') }}" class="back-btn" title="Back to Connection Options">&larr; Back</a>
+        <a href="{{ url_for('admin') }}" class="admin-link">Admin</a>
+    </div>
+
+  <main class="container" role="main" aria-labelledby="form-title">
+    <h2 id="form-title">
+      {% if connection_type == 'find' %}
+        Find a Study Buddy / Group / Accountability Partner(s)
+      {% elif connection_type == 'offer' %}
+        Offer Support to Someone
+      {% elif connection_type == 'need' %}
+        I Need Support (I'm Behind / Struggling)
+      {% else %}
+        PeerFinder Form
+      {% endif %}
+    </h2>
+
+    <div class="warning-message" role="alert" aria-live="polite">
+        <h3>⚠️ Before You Fill This Form — Please Read Carefully</h3>
+        <p>We want this to be a positive and supportive experience for everyone. To help make that happen:</p>
+        <ul>
+            <li>Please show up for your partner or group — ghosting is discouraged and can affect their progress.</li>
+            <li>Please fill out this form with accurate information only — incorrect or fake details will affect the pairing process. If you can't provide accurate details, kindly don't submit the form</li>
+            <li><strong>If you've completed all your modules, please consider supporting others who are catching up — your help could change a learner's life.🤗</strong></li>
+            <li>If you no longer wish to participate, let your partner/group know first before unpairing.</li>
+            <li>If you'd like to be paired with someone new, you'll need to register again.</li>
+        </ul>
+        <p>Thank you for helping us create a respectful, caring, and uplifting learning community</p>
+    </div>
+
+    <!-- <a href="{{ url_for('check_match') }}" class="check-status-btn" title="Check your match status">Check Match Status</a> -->
+
+    {% if error %}
+      <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('join_queue') }}">
+      <input type="hidden" name="connection_type" value="{{ connection_type }}" />
+      <label for="term">Term:</label>
+        <select id="term" name="term" required>
+          <option value="">--Select--</option>
+          <option value="Term 1">Term 1</option>
+          <option value="Term 2">Term 2</option>
+        </select>
+      
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="phone">Phone Number:</label>
+      <div class="phone-note">Please start with a plus sign (+) and your country code</div>
+      <input type="tel" id="phone" name="phone" placeholder="+1234567890" required />
+
+      <label for="country">Country:</label>
+      <select id="country" name="country" required>
+        <option value="">--Select Your Country--</option>
+        <option value="Egypt">Egypt</option>
+        <option value="Ethiopia">Ethiopia</option>
+        <option value="Ghana">Ghana</option>
+        <option value="Kenya">Kenya</option>
+        <option value="Morocco">Morocco</option>
+        <option value="Nigeria">Nigeria</option>
+        <option value="Rwanda">Rwanda</option>
+        <option value="South Africa">South Africa</option>
+        <option value="Other (African Country)">Other (African Country)</option>
+        <option value="Other (Non-African Country)">Other (Non-African Country)</option>
+      </select>
+
+      <label for="language">Preferred Language:</label>
+      <select id="language" name="language" required>
+        <option value="">--Select--</option>
+        <option value="English">English</option>
+        <option value="Arabic">Arabic</option>
+        <option value="French">French</option>
+        <option value="Swahili">Swahili</option>
+      </select>
+
+      <label for="open_to_global_pairing">Are you open to be paired with anyone outside your country/city or preferred laguage?</label>
+      <select id="open_to_global_pairing" name="open_to_global_pairing" required>
+        <option value="">--Select--</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label for="cohort">Cohort:</label>
+      <select id="cohort" name="cohort" required>
+        <option value="">--Select--</option>
+        {% for i in range(2, 4) %}
+          <option value="Cohort {{ i }}">Cohort {{ i }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="topic_module">I am currently in... (Select Course):</label>
+      <select id="topic_module" name="topic_module" required>
+        <option value="">--Select--</option>
+        <option value="Week 1">Foundations in Entrepreneurship (ENT 100)</option>
+        <option value="Week 2">College Algebra (QNT 101)</option>
+        <option value="Week 3">Introduction to Venture Creation (ENT 110)</option>
+        <option value="Week 4">Business Finance (BUS 200)</option>
+        <option value="Week 5">Introduction to Statistics (QNT 102)</option>
+        <option value="Week 6">Introduction to Software Engineering (SE 101)</option>
+        <option value="Week 7">Foundations of Linux and Version Control (SE 102)</option>
+      </select>
+
+
+      <label for="learning_preferences">Learning Preferences:</label>
+      <select id="learning_preferences" name="learning_preferences" required>
+        <option value="">--Select--</option>
+        <option value="Quick chats">Quick chats</option>
+        <option value="Co-work sessions">Co-work sessions</option>
+        <option value="Deep dives">Deep dives</option>
+        <option value="Regular check-ins">Regular check-ins</option>
+        <option value="Flexible (Any or All preferences)">Flexible (Any or All preferences)</option>
+      </select>
+
+      <label for="availability">Availability:</label>
+      <select id="availability" name="availability" required>
+        <option value="">--Select--</option>
+        <option value="Morning">Morning</option>
+        <option value="Afternoon">Afternoon</option>
+        <option value="Evening">Evening</option>
+        <option value="Flexible">Flexible (Any time)</option>
+      </select>
+
+      {% if connection_type == 'find' %}
+        <label for="preferred_study_setup">Preferred Study Setup:</label>
+        <select id="preferred_study_setup" name="preferred_study_setup" required>
+          <option value="">--Select--</option>
+          <option value="2">A Study Buddy (Peer)</option>
+          <option value="3">A Group of 3</option>
+          <option value="5">A Group of 5</option>
+        </select>
+      {% elif connection_type in ['offer', 'need'] %}
+        <label for="kind_of_support">Kind of Support {{ "to provide" if connection_type == "offer" else "you need" }}:</label>
+        <select id="kind_of_support" name="kind_of_support" required>
+          <option value="">--Select--</option>
+          <option value="Explanation on a concept/module">Explain a concept/module</option>
+          <option value="Review my creation">Review my work</option>
+          <option value="Brainstorming together">Brainstorming together</option>
+          <option value="Skill exchange">Skill exchange</option>
+        </select>
+      {% endif %}
+       <div style="margin-top: 0.5rem; margin-bottom: 1rem; display: flex; align-items: center;">
+        <input type="checkbox" id="disclaimer_agree" name="disclaimer_agree" required style="margin: 0; margin-right: 8px;" />
+          <label for="disclaimer_agree" style="font-size: 0.98rem; margin: 0;">
+              I have read and accept the
+              <a href="{{ url_for('disclaimer') }}" target="_blank" style="color:#5648B7; font-weight:600; text-decoration:underline;">
+                PeerFinder Disclaimer
+              </a>.
+          </label>
+      </div>
+      <div style="margin-top: 1.5rem; text-align: center;">
+        <button type="submit" onclick="this.disabled=true;this.form.submit();this.textContent='Please wait, processing your information...⏳';">Submit</button>
+      </div>
+    </form>
+  </main>
+  <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+      // Disable the submit button to prevent multiple clicks
+      const submitBtn = this.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending email...⏳';
+
+      // Optionally show a loading overlay/message
+      let loadingDiv = document.createElement('div');
+      loadingDiv.id = 'loadingOverlay';
+      loadingDiv.style.position = 'fixed';
+      loadingDiv.style.top = '0';
+      loadingDiv.style.left = '0';
+      loadingDiv.style.width = '100vw';
+      loadingDiv.style.height = '100vh';
+      loadingDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      loadingDiv.style.color = '#fff';
+      loadingDiv.style.fontSize = '1.5rem';
+      loadingDiv.style.display = 'flex';
+      loadingDiv.style.justifyContent = 'center';
+      loadingDiv.style.alignItems = 'center';
+      loadingDiv.style.zIndex = '9999';
+      loadingDiv.textContent = 'Please wait while we process your request...';
+      document.body.appendChild(loadingDiv);
+    });
+      document.querySelector('form').addEventListener('submit', function(e) {
+    // Disable the submit button to prevent multiple clicks
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Please wait, processing your information...⏳';
+  });
+  </script>
+</body>
+
+</html>
