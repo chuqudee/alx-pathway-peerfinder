@@ -75,9 +75,9 @@
       border-radius: 18px;
       box-shadow: 0 3px 14px rgba(0,0,0,0.09);
       flex: 1 1 260px;
-      max-width: 340px;
+      max-width: 250px;
       padding: 2rem 1.5rem 1.4rem 1.5rem;
-      min-width: 230px;
+      min-width: 220px;
       text-align: center;
       transition: box-shadow 0.2s;
       cursor: pointer;
@@ -130,29 +130,21 @@
     .modal-card {
       background: #fff;
       border-radius: 16px;
-      max-width: 520px;
+      max-width: 620px;
       width: 97vw;
+      max-height: 70vh; /* Limit height to 80% viewport */
       padding: 2.5rem 2rem;
       box-shadow: 0 4px 32px rgba(30,74,175,0.10);
       transform: translateY(-40px);
       opacity: 0;
       transition: opacity 0.35s, transform 0.35s;
       font-family: 'Poppins', Arial, sans-serif!important;
+      overflow-y: auto; /* scroll content inside modal when too tall */
+      position: relative;
     }
     .modal-bg.active .modal-card {
       opacity: 1;
       transform: translateY(0);
-    }
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.7rem;
-      color: #333;
-      position: absolute;
-      right: 1.4rem;
-      top: 1.0rem;
-      cursor: pointer;
-      font-weight: 600;
     }
     @media (max-width: 900px) {
       .main-activities { flex-direction: column; align-items: center;}
@@ -179,23 +171,23 @@
       Connect with fellow learners and partners in your cohort to collaborate at your own pace — one-on-one or in groups — to grow, learn, and achieve together.
     </p>
     <div class="main-activities">
-      <div class="activity-card" data-activity="debate">
-        <div class="activity-icon">🗣️</div>
-        <div class="activity-title">Debate</div>
-        <div class="activity-module">Module 6</div>
-        <div>Engage in dynamic, structured English debates with peers.</div>
-      </div>
-      <div class="activity-card" data-activity="interview">
-        <div class="activity-icon">🎤</div>
-        <div class="activity-title">Interview</div>
-        <div class="activity-module">Module 10</div>
-        <div>Practice English interview skills with real partners.</div>
-      </div>
-      <div class="activity-card" data-activity="study_buddy">
+      <div class="activity-card" data-activity="find">
         <div class="activity-icon">🤝</div>
-        <div class="activity-title">Study Buddy</div>
+        <div class="activity-title">Find a Study Buddy</div>
         <div class="activity-module">Accountability Partner</div>
-        <div>Get general support and accountability match-ups.</div>
+        <div>Get matched with a supportive peer or study group.</div>
+      </div>
+      <div class="activity-card" data-activity="offer">
+        <div class="activity-icon">💡</div>
+        <div class="activity-title">Offer Support to Someone</div>
+        <div class="activity-module">Mentorship ⭐⭐⭐</div>
+        <div>Help others by sharing your knowledge and skills.</div>
+      </div>
+      <div class="activity-card" data-activity="need">
+        <div class="activity-icon">🆘</div>
+        <div class="activity-title">I Need Support</div>
+        <div class="activity-module">Struggling Learner</div>
+        <div>Request help if you’re behind or facing challenges.</div>
       </div>
     </div>
     <div>
@@ -208,8 +200,7 @@
   <!-- Modal Form - hidden by default -->
   <div class="modal-bg" id="matchModal">
     <div class="modal-card">
-      <button class="close-btn" onclick="closeModal()">×</button>
-      <!-- Embed the form here. Render using Flask or fetch via AJAX for modularity. For now, just a placeholder: -->
+      <!--<button class="close-btn" onclick="closeModal()">×</button> -->
       <div id="modal-form-container"></div>
     </div>
   </div>
@@ -218,9 +209,7 @@
     // JavaScript to handle modal open/close & transition
     function openModal(activityType) {
       document.getElementById('matchModal').classList.add('active');
-      // You can render or fetch the relevant form.html with Flask here
-      // Or use AJAX (fetch) to load the correct activity-specific form into #modal-form-container
-      fetch(`/form_fragment/${activityType}`)
+      fetch(`/start/?connection_type=${activityType}`)
         .then(res => res.text())
         .then(html => document.getElementById('modal-form-container').innerHTML = html);
     }
