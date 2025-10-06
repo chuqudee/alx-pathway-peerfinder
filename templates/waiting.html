@@ -66,6 +66,19 @@
             background: #ccc;
             cursor: not-allowed;
         }
+        .button-link {
+            display: inline-block;
+            background-color: #1976d2; /* blue color */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .button-link:hover {
+            background-color: #125ca1; /* darker blue on hover */
+        }
         .back-link, .check-status-link {
             display: inline-block;
             margin-top: 1.5rem;
@@ -213,10 +226,10 @@
                 <strong>Your ID:</strong> <span style="color:#d06106;">{{ user_id }}</span>
             </div>
         {% endif %}
-        <button class="find-btn" {% if match_attempted %}disabled{% endif %} onclick="tryMatch()">Find Matches Now</button>
+        <button class="find-btn" {% if match_attempted %}disabled{% endif %} onclick="tryMatch()">Click here👆 to find matches now</button>
         <br>
-        <a href="{{ url_for('check_match') }}" class="check-status-link">Check Match Status</a>
-        <a href="{{ url_for('landing') }}" class="back-link">&larr; Back to Home</a>
+        <a href="{{ url_for('check_match') }}" class="button-link">Check Match Status</a>
+        <a href="{{ url_for('landing') }}" class="button-link">&larr; Back to Home</a>
     </div>
 </body>
 </html>
